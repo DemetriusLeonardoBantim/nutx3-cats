@@ -1,12 +1,9 @@
-import axios from 'axios';
-
 export const useCatsStore = defineStore(
-  "videos",
+  "cats",
   () => {
     const cats = ref<string[]>([]);
 
     const saveCats = (newData: string[]) => {
-      console.log(newData)
       cats.value = newData
     };
 
