@@ -3,7 +3,7 @@
     <Header />
     <div class="flex-grow bg-pale flex items-center justify-center flex-col">
         <div class="video-item">
-          <CatDescription :description="cats[randomIndex]"/>
+          <CatDescription :description="catsData[randomIndex]"/>
         </div>
       <Button @click="handleDescription" />
     </div>
@@ -11,20 +11,31 @@
 </template>
 
 <script setup>
-import { useCatsStore } from '@/stores/cats';
+import { useCatsStore } from '@/stores/cats';const randomIndex = ref(0);
 
-const catsStore = useCatsStore();
+  const catsStore = useCatsStore()
 
-const cats = catsStore.cats;
-const fetchCats = catsStore.fetchCats;
-const randomIndex = ref(0);
-
+const saveCats = catsStore.saveCats;
+const cats = ref()
 
 const handleDescription = () => {
-    randomIndex.value = Math.floor(Math.random() * 99);
+    randomIndex.value = Math.floor(Math.random() * 90);
 };
 
-onMounted(() => {
-  fetchCats();
+const {
+  data: catsData,
+  pending,
+  error,
+  refresh,
+  status,
+} = useLazyFetch('https://meowfacts.herokuapp.com/?count=100', {
+  transform: (catsData) => {
+    saveCats(catsData.data)
+    return catsData.data
+  },
+  query: {
+    page: cats,
+  },
 });
+
 </script>
