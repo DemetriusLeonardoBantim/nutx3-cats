@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     '@nuxt/fonts',
     '@nuxtjs/tailwindcss',
+    '@nuxt/image',
     ['@nuxtjs/google-fonts', {
       families: {
         Jost: true,
@@ -19,6 +20,10 @@ export default defineNuxtConfig({
   ],
   pinia: {
     storesDirs: ["./stores/**"],
+  },
+  image: {
+    inject: true,
+    quality: 100,
   },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
